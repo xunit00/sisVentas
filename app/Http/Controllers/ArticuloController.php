@@ -45,7 +45,7 @@ class ArticuloController extends Controller
     public function create()
     {
         $categorias=DB::table('categoria')->where('condicion','=','1')->get();
-        return view('almacen.articulos.create',["categorias"=>$categorias]);
+        return view('almacen.articulo.create',["categorias"=>$categorias]);
     }
 
     /**
@@ -62,12 +62,12 @@ class ArticuloController extends Controller
         $articulo->nombre=$request->get('nombre');
         $articulo->stock=$request->get('stock');
         $articulo->descripcion=$request->get('descripcion');
-        $articulo->estado='Activo';
+        $articulo->estado='Activo'; 
 
         if(Input::hasFile('imagen'))
         {
             $file=Input::file('imagen');
-            $file=move(public_path().'/dist/img/articulos/',$file->getClientOriginalName());
+            $file->move(public_path().'/dist/img/articulos/',$file->getClientOriginalName());
             $articulo->imagen=$file->getClientOriginalName();
         }
 
@@ -95,8 +95,8 @@ class ArticuloController extends Controller
     public function edit($id)
     {
         $articulo=Articulo::findOrFail($id);
-        $categorias=DB::table('categoria')->where('condicion','=','1');
-        return view('almacen.articulo.edit',['articulo'=>Articulo::findOrFail($id)]);
+        $categorias=DB::table('categoria')->where('condicion','=','1')->get();
+        return view('almacen.articulo.edit',['articulo'=>$articulo,"categorias"=>$categorias]);
     }
 
     /**
@@ -109,6 +109,7 @@ class ArticuloController extends Controller
     public function update(ArticuloFormRequest $request, $id)
     {
         $articulo=Articulo::findOrFail($id);
+
         $articulo->idcategoria=$request->get('idcategoria');    
         $articulo->codigo=$request->get('codigo');
         $articulo->nombre=$request->get('nombre');
@@ -118,7 +119,7 @@ class ArticuloController extends Controller
         if(Input::hasFile('imagen'))
         {
             $file=Input::file('imagen');
-            $file=move(public_path().'/dist/img/articulos/',$file->getClientOriginalName());
+            $file->move(public_path().'/dist/img/articulos/',$file->getClientOriginalName());
             $articulo->imagen=$file->getClientOriginalName();
         }
 
@@ -135,7 +136,7 @@ class ArticuloController extends Controller
     public function destroy($id)
     {
         $articulo=Articulo::findOrFail($id);
-        $articulo->estado='0';
+        $articulo->estado='Inactivo';
         $articulo->update();
         return Redirect::to('almacen/articulo');
     }

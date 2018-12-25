@@ -12,6 +12,7 @@
             </ul>
         </div>
         @endif
+    </div>
         {!!Form::open(array('url'=>'almacen/categoria','method'=>'POST','autocomplete'=>'off'))!!}
         @csrf
         <div class="form-group">
