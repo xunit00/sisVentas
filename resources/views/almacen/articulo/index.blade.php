@@ -1,10 +1,10 @@
 @extends('layouts.master')
 @section('contenido')
-<h1 class="text-center">Listado Categorias</h1>
+<h1 class="text-center">Listado Articulos</h1>
 <div class="container">
-<a class="btn btn-info mb-3"  href="{{route('categoria.create')}}">Agregar Categoria</a>
+<a class="btn btn-info mb-3"  href="{{route('articulo.create')}}">Agregar Articulos</a>
 <div>
-@include('almacen.categoria.search')
+@include('almacen.articulo.search')
 </div>
 <div class="table-responsive">
 <table class="table">
@@ -12,33 +12,43 @@
     <tr>
       <th scope="col">Id</th>
       <th scope="col">Nombre</th>
-      <th scope="col">Descripcion</th>
+      <th scope="col">Codigo</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Imagen</th>
+      <th scope="col">Estado</th>
       <th scope="col" colspan="2" >Acciones</th>
     </tr>
   </thead>
   <tbody>
-  @foreach($categorias as $cat)
+  @foreach($articulos as $art)
     <tr>
-      <th scope="row">{{$cat->idcategoria}}</th>
-      <td>{{$cat->nombre}}</td>
-      <td>{{$cat->descripcion}}</td>
+      <th scope="row">{{$art->idarticulo}}</th>
+      <td>{{$art->nombre}}</td>
+      <td>{{$art->codigo}}</td>
+      <td>{{$art->categoria}}</td>
+      <td>{{$art->stock}}</td>
       <td>
-      <a href="{{ route('categoria.edit', $cat->idcategoria) }}">
+        <img src="{{asset('/dist/img/articulos/'.$art->imagen)}}" alt="{{$art->nombre}}" height="50px" width="50px" class="img-thubnail"> 
+      </td>
+      <td>{{$art->estado}}</td>
+      <td>
+      <a href="{{ route('articulo.edit', $art->idarticulo) }}">
       <button class="btn-sm btn-info">Editar</button>
       </a>
       </td>
       <td>
-      <form action="{{route('categoria.destroy',$cat->idcategoria)}}"method="POST">
+      <form action="{{route('articulo.destroy',$art->idarticulo)}}"method="POST">
       @csrf
       @method('DELETE')
      
-      <button type="submit" class="btn-sm btn-danger" onclick="return confirm('Quiere borrar esta Categoria?')">Eliminar<i class="far fa-trash-alt"></i></button>
+      <button type="submit" class="btn-sm btn-danger" onclick="return confirm('Quiere borrar este Articulo?')">Eliminar<i class="far fa-trash-alt"></i></button>
     </form>
       </td>
     </tr>
    @endforeach
   </tbody>
-{{$categorias->links()}}
+{{$articulos->links()}}
 </table>
 </div>
 </div>

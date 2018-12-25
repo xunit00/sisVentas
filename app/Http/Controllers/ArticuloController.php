@@ -21,15 +21,16 @@ class ArticuloController extends Controller
             
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if($request)
         {
             $query=trim($request->get('searchText'));
-            $categorias=DB::table('artuculo as a')
+            $articulos=DB::table('articulo as a')
             ->join('categoria as c','a.idcategoria','=','c.idcategoria')
-            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.descripcion','a.imagen','a,stado')
+            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.descripcion','a.imagen','a.estado')
                 ->where('a.nombre','LIKE','%'.$query.'%')
+                ->orwhere('a.codigo','LIKE','%'.$query.'%')
                 ->orderBy('idarticulo','desc')
                 ->paginate(5);
             return view('almacen.articulo.index',["articulos"=>$articulos,"searchText"=>$query]);  
@@ -66,7 +67,7 @@ class ArticuloController extends Controller
         if(Input::hasFile('imagen'))
         {
             $file=Input::file('imagen');
-            $file=move(public_path().'/imagenes/articulos/',$file->getClientOriginalName());
+            $file=move(public_path().'/dist/img/articulos/',$file->getClientOriginalName());
             $articulo->imagen=$file->getClientOriginalName();
         }
 
@@ -117,7 +118,7 @@ class ArticuloController extends Controller
         if(Input::hasFile('imagen'))
         {
             $file=Input::file('imagen');
-            $file=move(public_path().'/imagenes/articulos/',$file->getClientOriginalName());
+            $file=move(public_path().'/dist/img/articulos/',$file->getClientOriginalName());
             $articulo->imagen=$file->getClientOriginalName();
         }
 
