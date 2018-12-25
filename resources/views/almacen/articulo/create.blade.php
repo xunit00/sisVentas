@@ -46,12 +46,12 @@
 
     <div class="form-group">
         <label for="imagen">Imagen</label>
-        <input type="file" name="imagen" class="form-control">
+        <input type="file" name="imagen" class="form-control-file">
     </div> 
 </div>
 
 <div class="container">
-    <button class="btn btn-primary" type="submit">Guardar</button>
+    <button class="btn btn-info" type="submit">Guardar</button>
     <button class="btn btn-danger" type="reset">Cancelar</button>
 </div> 
 {!!Form::close()!!}

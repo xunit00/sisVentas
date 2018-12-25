@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('contenido')
 <div class="container">
-    <div>
+ 
         <h3>Editar Articulo: {{$articulo->nombre}}<h3>
        @if(count($errors)>0)
         <div class="alert alert-danger">
@@ -30,8 +30,9 @@
             @endif
             @endforeach
             </select>
-        </div> 
+    </div> 
    
+    
     <div class="form-group">
         <label for="codigo">Codigo</label>
         <input type="text" name="codigo" required value="{{$articulo->codigo}}" class="form-control">
@@ -57,10 +58,9 @@
 </div>
 
 <div class="container">
-    <button class="btn btn-primary" type="submit">Guardar</button>
+    <button class="btn btn-info" type="submit">Guardar</button>
     <button class="btn btn-danger" type="reset">Cancelar</button>
 </div> 
         {!!Form::close()!!}
-    </div>
 </div>
 @endsection
