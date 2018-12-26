@@ -50,7 +50,7 @@ class IngresoController extends Controller
         ->select(DB::raw('CONCAT(art.codigo, " " ,art.nombre)as articulo'),'art.idarticulo')
         ->where('art.estado','=','Activo')
         ->get();
-        return view("compras.ingreso.create",["personas"=>$personas,"articulos"=>$articulos]);
+        return view("compras.ingresos.create",["personas"=>$personas,"articulos"=>$articulos]);
     }
 
     /**

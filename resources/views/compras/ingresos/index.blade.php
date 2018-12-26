@@ -2,7 +2,7 @@
 @section('contenido')
 <h1 class="text-center">Listado Ingesos</h1>
 <div class="container">
-<a class="btn btn-info mb-3"  href="{{route('ingresos.create')}}">Agregar Articulos</a>
+<a class="btn btn-info mb-3"  href="{{route('ingresos.create')}}">Agregar Ingreso</a>
 <div>
 @include('compras.ingresos.search')
 </div>
