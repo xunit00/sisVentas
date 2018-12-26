@@ -16,6 +16,10 @@ use Carbon\Carbon;
 
 class IngresoController extends Controller
 {
+    public function __construct()
+    {
+    
+    }
      /**
      * Display a listing of the resource.
      *
@@ -63,28 +67,27 @@ class IngresoController extends Controller
     {
         try {
             DB::beginTransaction();
-            $ingreso=new Ingreso;
-            $ingreso->idproveedor->$request->get('Proveedor');
-            $ingreso->tipo_comprobante=$request->get('tipo_comprobante');    
+            $ingreso = new Ingreso;
+            $ingreso->idproveedor=$request->get('idproveedor');
+            $ingreso->tipo_comprobante=$request->get('tipo_comprobante');
             $ingreso->serie_comprobante=$request->get('serie_comprobante');
             $ingreso->num_comprobante=$request->get('num_comprobante');
-            $mytime=Carbon::now('America/Santo_Domingo'); 
-            $ingreso->fecha_hora=$mytime->todDateTimeString(); 
-            $ingreso->impuesto='18'; 
-            $ingreso->estado='A'; 
+            $mytime = Carbon::now('America/Mexico_City');
+            $ingreso->fecha_hora = $mytime->toDateTimeString();
+            $ingreso->impuesto='18';
+            $ingreso->estado='A';
             $ingreso->save();
 
             $idarticulo=$request->get('idarticulo');
-            $cantidad=$request->get('cantidad');
-            $precio_compra=$request->get('precio_compra');
-            $precio_venta=$request->get('precio_venta');
+            $cantidad = $request->get('cantidad');
+            $precio_compra = $request->get('precio_compra');
+            $precio_venta = $request->get('precio_venta');
 
-            $cont=0;
-
-            while($cont<count($idarticulo))
-            {
-                $cont=$cont+1;
-                $detalle=new DetalleIngreso();
+            //recorre los articulos agregados
+            $cont = 0;
+            while ($cont < count($idarticulo)) {
+                # code...
+                $detalle = new DetalleIngreso();
                 $detalle->idingreso=$ingreso->idingreso;
                 $detalle->idarticulo=$idarticulo[$cont];
                 $detalle->cantidad=$cantidad[$cont];
@@ -94,13 +97,11 @@ class IngresoController extends Controller
                 $cont=$cont+1;
             }
             DB::commit();
-
-        } catch (\Exception $e) 
-        {
-            DB::rollBack();
+         } catch (\Exception $e) {
+            DB::rollback(); 
         }
-        
-        return Redirect::to('compras/ingreso');
+           
+        return Redirect::to('compras/ingresos');
     }
 
     /**
@@ -127,38 +128,6 @@ class IngresoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('compras.proveedor.edit',['persona'=>Persona::findOrFail($id)]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(PersonaFormRequest $request, $id)
-    {
-        $persona=new Persona;
-        $persona->tipo_persona='Proveedor';
-        $persona->nombre=$request->get('nombre');    
-        $persona->tipo_documento=$request->get('tipo_documento');
-        $persona->num_documento=$request->get('num_documento');
-        $persona->direccion=$request->get('direccion'); 
-        $persona->telefono=$request->get('telefono'); 
-        $persona->email=$request->get('email'); 
-        $persona->update();
-        return Redirect::to('compras/proveedor');
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -169,6 +138,6 @@ class IngresoController extends Controller
         $ingreso=Ingreso::findOrFail($id);
         $ingreso->Estado='C';
         $ingreso->update();
-        return Redirect::to('compras/ingreso ');
+        return Redirect::to('compras/ingresos');
     }
 }

@@ -1,19 +1,6 @@
 @extends('layouts.master')
 @section('contenido')
-<div class="container">
-        <h3>Nuevo Ingreso</h3>
-            @if(count($errors)>0)
-        <div class="alert alert-danger">
-            <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-            </ul>
-        </div>
-        @endif
-</div>
-        {!!Form::open(array('url'=>'compras/ingresos','method'=>'POST','autocomplete'=>'off'))!!}
-        @csrf
+
 <div class="container">
     <div class="form-group">
         <label for="proveedor">Proveedor</label>

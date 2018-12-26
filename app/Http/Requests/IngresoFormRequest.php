@@ -28,9 +28,9 @@ class IngresoFormRequest extends FormRequest
         'tipo_comprobante'=>'required|max:20',
         'serie_comprobante'=>'required|max:7',
         'num_comprobante'=>'required|max:10',
-        'fecha_hora'=>'required',
+       /* 'fecha_hora'=>'required',
         'impuesto'=>'required',
-        'estado'=>'required'
+        'estado'=>'required'*/
         ];
     }
 }
